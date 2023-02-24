@@ -24,7 +24,7 @@ class Sentry extends AbstractWriter
      * @param int $maxLogLevel
      * @return void
      */
-    public function configureAws(string $sentryDsn, ?string $environment = null, int $maxLogLevel = \Laminas\Log\Logger::WARN): void
+    public function configureSentry(string $sentryDsn, ?string $environment = null, int $maxLogLevel = \Laminas\Log\Logger::WARN): void
     {
         $this->sentryDsn = $sentryDsn;
         $this->environment = $environment;
