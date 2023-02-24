@@ -4,6 +4,9 @@ namespace TimRutte\Laminas\Log\Writer;
 
 use Laminas\Log\Exception\InvalidArgumentException;
 use Laminas\Log\Writer\AbstractWriter;
+use Laminas\Log\Logger;
+use Sentry\Severity;
+use Sentry\Event;
 
 class Sentry extends AbstractWriter
 {
@@ -24,7 +27,7 @@ class Sentry extends AbstractWriter
      * @param int $maxLogLevel
      * @return void
      */
-    public function configureSentry(string $sentryDsn, ?string $environment = null, int $maxLogLevel = \Laminas\Log\Logger::WARN): void
+    public function configureSentry(string $sentryDsn, ?string $environment = null, int $maxLogLevel = Logger::WARN): void
     {
         $this->sentryDsn = $sentryDsn;
         $this->environment = $environment;
@@ -37,7 +40,7 @@ class Sentry extends AbstractWriter
             throw new InvalidArgumentException('Missing Sentry DSN');
         }
 
-        if (is_numeric($this->maxLogLevel)) {
+        if (!is_numeric($this->maxLogLevel)) {
             throw new InvalidArgumentException('Unknown maximum log level. Integer required.');
         }
     }
@@ -47,22 +50,22 @@ class Sentry extends AbstractWriter
         $this->validateSentryConfiguration();
 
         switch ($event['priority']) {
-            case \Laminas\Log\Logger::DEBUG:
-                $sentrySeverity = \Sentry\Severity::debug();
+            case Logger::DEBUG:
+                $sentrySeverity = Severity::debug();
                 break;
-            case \Laminas\Log\Logger::INFO:
-                $sentrySeverity = \Sentry\Severity::info();
+            case Logger::INFO:
+                $sentrySeverity = Severity::info();
                 break;
-            case \Laminas\Log\Logger::WARN:
-                $sentrySeverity = \Sentry\Severity::warning();
+            case Logger::WARN:
+                $sentrySeverity = Severity::warning();
                 break;
-            case \Laminas\Log\Logger::ALERT:
-            case \Laminas\Log\Logger::CRIT:
-                $sentrySeverity = \Sentry\Severity::fatal();
+            case Logger::ALERT:
+            case Logger::CRIT:
+                $sentrySeverity = Severity::fatal();
                 break;
-            case \Laminas\Log\Logger::ERR:
+            case Logger::ERR:
             default:
-                $sentrySeverity = \Sentry\Severity::error();
+                $sentrySeverity = Severity::error();
                 break;
         }
 
@@ -70,7 +73,7 @@ class Sentry extends AbstractWriter
             return;
         }
 
-        $sentryEvent = \Sentry\Event::createEvent();
+        $sentryEvent = Event::createEvent();
         $sentryEvent->setLevel($sentrySeverity);
         if ($this->environment !== null) {
             $sentryEvent->setEnvironment($this->environment);
