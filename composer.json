@@ -1,0 +1,28 @@
+{
+    "name": "timrutte/laminas-log-writer-sentry",
+    "description": "Log writer to send all logs to Sentry",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "laminas",
+        "log",
+        "logging"
+    ],
+    "homepage": "https://www.timrutte.de",
+    "support": {
+        "issues": "https://github.com/timrutte/laminas-log-writer-sentry/issues",
+        "source": "https://github.com/timrutte/laminas-log-writer-sentry",
+        "rss": "https://github.com/timrutte/laminas-log-writer-sentry/releases.atom"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "require": {
+        "laminas/laminas-log": "^2.16",
+        "sentry/sdk": "^3.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "TimRutte\\Laminas\\Log\\": "src/"
+        }
+    }
+}
