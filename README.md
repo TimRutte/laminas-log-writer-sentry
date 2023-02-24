@@ -14,7 +14,7 @@ $ composer require timrutte/laminas-log-writer-sentry
 $writer = new \TimRutte\Laminas\Log\Writer\Sentry();
 $writer->configureSentry(
     '<SENTRY_DSN>', 
-    '<ENVIRONMENT>'
+    '<ENVIRONMENT>',
     '<MIN_LOG_LEVEL>' 
 );
 $formatter = new \Laminas\Log\Formatter\Json();
